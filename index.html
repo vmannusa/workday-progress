@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workday Progress</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #f4f4f4;
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+    }
+    #progress {
+      font-size: 24px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Workday Progress</h1>
+  <label for="start">Start Time:</label>
+  <input type="time" id="start" value="09:00"><br>
+
+  <label for="end">End Time:</label>
+  <input type="time" id="end" value="17:00"><br>
+
+  <button onclick="startTracking()">Start</button>
+
+  <div id="progress">--%</div>
+
+  <script>
+    let startTime, endTime, interval;
+
+    function startTracking() {
+      clearInterval(interval);
+
+      const startInput = document.getElementById("start").value;
+      const endInput = document.getElementById("end").value;
+
+      if (!startInput || !endInput) {
+        alert("Please enter both start and end times.");
+        return;
+      }
+
+      startTime = parseTime(startInput);
+      endTime = parseTime(endInput);
+
+      if (endTime <= startTime) {
+        alert("End time must be after start time.");
+        return;
+      }
+
+      updateProgress();
+      interval = setInterval(updateProgress, 1000);
+    }
+
+    function parseTime(str) {
+      const [hours, minutes] = str.split(":").map(Number);
+      const now = new Date();
+      now.setHours(hours, minutes, 0, 0);
+      return now;
+    }
+
+    function updateProgress() {
+      const now = new Date();
+      const total = endTime - startTime;
+      const elapsed = now - startTime;
+
+      let percent = (elapsed / total) * 100;
+      percent = Math.max(0, Math.min(percent, 100));
+
+      document.getElementById("progress").innerText = percent.toFixed(2) + "% of your workday has passed";
+    }
+  </script>
+</body>
+</html>
