@@ -25,6 +25,21 @@
       margin-top: 10px;
       cursor: pointer;
     }
+    .progress-bar-container {
+      width: 100%;
+      max-width: 500px;
+      height: 30px;
+      background-color: #ddd;
+      margin: 20px auto;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: green;
+      transition: width 0.5s, background-color 0.5s;
+    }
   </style>
 </head>
 <body>
@@ -38,6 +53,9 @@
   <button onclick="startTracking()">Start</button>
 
   <div id="progress">--%</div>
+  <div class="progress-bar-container">
+    <div id="bar" class="progress-bar"></div>
+  </div>
 
   <script>
     let startTime, endTime, interval;
@@ -62,7 +80,7 @@
       }
 
       updateProgress();
-      interval = setInterval(updateProgress, 1);
+      interval = setInterval(updateProgress, 1000);
     }
 
     function parseTime(str) {
@@ -81,6 +99,20 @@
       percent = Math.max(0, Math.min(percent, 100));
 
       document.getElementById("progress").innerText = percent.toFixed(2) + "% of your workday has passed";
+
+      const bar = document.getElementById("bar");
+      bar.style.width = percent + "%";
+
+      // Set bar color based on percentage
+      if (percent <= 25) {
+        bar.style.backgroundColor = "green";
+      } else if (percent <= 50) {
+        bar.style.backgroundColor = "yellow";
+      } else if (percent <= 75) {
+        bar.style.backgroundColor = "yellow";
+      } else {
+        bar.style.backgroundColor = "red";
+      }
     }
   </script>
 </body>
