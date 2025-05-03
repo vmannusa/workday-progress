@@ -48,7 +48,7 @@
   <input type="time" id="start" value="07:00"><br>
 
   <label for="end">End Time:</label>
-  <input type="time" id="end" value="16:30"><br>
+  <input type="time" id="end" value="17:30"><br>
 
   <button onclick="startTracking()">Start</button>
 
@@ -59,6 +59,13 @@
 
   <script>
     let startTime, endTime, interval;
+
+    function parseTime(str) {
+      const [hours, minutes] = str.split(":").map(Number);
+      const now = new Date();
+      now.setHours(hours, minutes, 0, 0);
+      return now;
+    }
 
     function startTracking() {
       clearInterval(interval);
@@ -83,13 +90,6 @@
       interval = setInterval(updateProgress, 1000);
     }
 
-    function parseTime(str) {
-      const [hours, minutes] = str.split(":").map(Number);
-      const now = new Date();
-      now.setHours(hours, minutes, 0, 0);
-      return now;
-    }
-
     function updateProgress() {
       const now = new Date();
       const total = endTime - startTime;
@@ -103,17 +103,17 @@
       const bar = document.getElementById("bar");
       bar.style.width = percent + "%";
 
-      // Set bar color based on percentage
       if (percent <= 25) {
         bar.style.backgroundColor = "green";
-      } else if (percent <= 50) {
-        bar.style.backgroundColor = "yellow";
       } else if (percent <= 75) {
         bar.style.backgroundColor = "yellow";
       } else {
         bar.style.backgroundColor = "red";
       }
     }
+
+    // Auto-start on page load with default times
+    window.onload = startTracking;
   </script>
 </body>
 </html>
