@@ -110,7 +110,7 @@
       let percent = (elapsed / total) * 100;
       percent = Math.max(0, Math.min(percent, 100));
 
-      document.getElementById("progress").innerText = percent.toFixed(5) + "% of your workday has passed";
+      document.getElementById("progress").innerText = percent.toFixed(4) + "% of your workday has passed";
 
       const bar = document.getElementById("bar");
       bar.style.width = percent.toFixed(5) + "%";
