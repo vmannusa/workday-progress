@@ -15,6 +15,11 @@
       padding: 8px;
       margin: 5px;
     }
+    #timestamp {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
     #progress {
       font-size: 24px;
       margin-top: 20px;
@@ -44,6 +49,10 @@
 </head>
 <body>
   <h1>Workday Progress</h1>
+
+  <!-- Timestamp -->
+  <div id="timestamp">Loading current time...</div>
+
   <label for="start">Start Time:</label>
   <input type="time" id="start" value="07:00"><br>
 
@@ -87,7 +96,10 @@
       }
 
       updateProgress();
-      interval = setInterval(updateProgress, 1000);
+      interval = setInterval(() => {
+        updateProgress();
+        updateTimestamp();
+      }, 1000);
     }
 
     function updateProgress() {
@@ -101,7 +113,7 @@
       document.getElementById("progress").innerText = percent.toFixed(5) + "% of your workday has passed";
 
       const bar = document.getElementById("bar");
-      bar.style.width = percent + "%";
+      bar.style.width = percent.toFixed(5) + "%";
 
       if (percent <= 25) {
         bar.style.backgroundColor = "green";
@@ -112,8 +124,19 @@
       }
     }
 
-    // Auto-start on page load with default times
-    window.onload = startTracking;
+    function updateTimestamp() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString();
+      const timeStr = now.toLocaleTimeString(); // Includes seconds
+      document.getElementById("timestamp").innerText = `Current Date & Time: ${dateStr} ${timeStr}`;
+    }
+
+    // Auto-start on page load with default times and real-time clock
+    window.onload = () => {
+      startTracking();
+      updateTimestamp();
+      setInterval(updateTimestamp, 1000);
+    };
   </script>
 </body>
 </html>
