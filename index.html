@@ -50,7 +50,6 @@
 <body>
   <h1>Workday Progress</h1>
 
-  <!-- Timestamp -->
   <div id="timestamp">Loading current time...</div>
 
   <label for="start">Start Time:</label>
@@ -74,6 +73,12 @@
       const now = new Date();
       now.setHours(hours, minutes, 0, 0);
       return now;
+    }
+
+    function shiftTimeToNextDay(time) {
+      const next = new Date(time);
+      next.setDate(next.getDate() + 1);
+      return next;
     }
 
     function startTracking() {
@@ -104,39 +109,5 @@
 
     function updateProgress() {
       const now = new Date();
-      const total = endTime - startTime;
-      const elapsed = now - startTime;
 
-      let percent = (elapsed / total) * 100;
-      percent = Math.max(0, Math.min(percent, 100));
-
-      document.getElementById("progress").innerText = percent.toFixed(3) + "% of your workday has passed";
-
-      const bar = document.getElementById("bar");
-      bar.style.width = percent.toFixed(5) + "%";
-
-      if (percent <= 25) {
-        bar.style.backgroundColor = "green";
-      } else if (percent <= 75) {
-        bar.style.backgroundColor = "yellow";
-      } else {
-        bar.style.backgroundColor = "red";
-      }
-    }
-
-    function updateTimestamp() {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString();
-      const timeStr = now.toLocaleTimeString(); // Includes seconds
-      document.getElementById("timestamp").innerText = `Current Date & Time: ${dateStr} ${timeStr}`;
-    }
-
-    // Auto-start on page load with default times and real-time clock
-    window.onload = () => {
-      startTracking();
-      updateTimestamp();
-      setInterval(updateTimestamp, 1000);
-    };
-  </script>
-</body>
-</html>
+      // Restart if the current time is past end time
