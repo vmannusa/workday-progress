@@ -26,6 +26,7 @@ A tiny single-page tracker that shows how much of your workday has passed, live,
 | --- | --- |
 | `index.html` | The whole app: HTML, CSS and JavaScript in one file, no build step or dependencies. |
 | `CHANGELOG.md` | What changed and when. |
+| `LICENSE` | MIT license. |
 
 ## Run it
 
@@ -48,3 +49,7 @@ Edit the `value` on the two time inputs in `index.html`:
 - Times you type aren't saved; a page refresh goes back to the defaults.
 
 See the [change log](CHANGELOG.md) for history.
+
+## License
+
+[MIT](LICENSE)

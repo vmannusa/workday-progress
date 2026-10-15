@@ -1,7 +1,7 @@
 # Workday Progress – Change log
 
 ## 2026-10-15
-- Added this README and change log.
+- Added this README, change log and an MIT license.
 
 ## 2025-05-09
 - Tried rolling the end time over to the next day for overnight shifts, then reverted to same-day tracking.
